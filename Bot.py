@@ -6,7 +6,7 @@ from threading import Thread
 
 
 with open('Bot token.txt', 'r', encoding='utf-8') as f:
-    Token = f.read()
+    Boken = f.read()
 
 # открываем файл, обязательно указывая режим и кодировку
 with open(r'IdArray.txt', mode='r', encoding='utf-8') as fl:
@@ -97,4 +97,4 @@ def write_message():
     
     
 
-client.run(Token)
+client.run(Boken)
