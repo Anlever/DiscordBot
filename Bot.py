@@ -6,7 +6,31 @@ from threading import Thread
 
 
 with open('Bot token.txt', 'r', encoding='utf-8') as f:
-    DISCORD_BOT_TOKEN = f.read()
+    Token = f.read()
+
+# открываем файл, обязательно указывая режим и кодировку
+with open(r'IdArray.txt', mode='r', encoding='utf-8') as fl:
+    # считываем содержимое файлам одним списком стром
+    onstring = fl.readlines()
+
+# определяем выводной словарь. Ключевое слово dict занято классом словаря,
+# поэтому его использовать в качестве идентификатора переменной не рекомендуется.
+# Так же не рекомендуется напрямую инициализировать его экземпляры. Для этого
+# есть соответствующий синтаксический литерал
+res = {}
+
+# проходим в цикле по списку строк
+for i in onstring:
+    # присваиваем переменным k и v левую и правую часть подстроки,
+    # разделяя по символу ':'
+    k, v = i.split(':')
+    # убираем лишние концевые пробелы
+    v = v.strip()
+    # определяем, является ли значение переменной v числом, и если да, то 
+    # преобразуем к целому числу, иначе оставляем строкой
+    v = int(v) if v.isdigit() else v
+    # добавляем в словарь соответствующие пары ключ:значение
+    res[k] =  v
 
 
 intents = discord.Intents.default()
@@ -23,19 +47,29 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author.id == 249133834866655232:
+    if message.author.id == res['Лёха']:
         emoji = '🤡'
         await message.add_reaction(emoji)
-    if message.author.id == 272345981142695936:
+        
+    if message.author.id == res['Сырник']:
         emoji = '💤'
         await message.add_reaction(emoji)
-    if message.author.id == 151662277001609216:
+        
+    if message.author.id == res['Егор']:
         emoji = '🚼'
         await message.add_reaction(emoji)
-    if message.author.id == 205998644262862849:
+        
+    if message.author.id == res['Рома']:
         await message.channel.send("О привет Рома")
-    if message.author.id == 241517599165382656:
-        await message.channel.send("Тест")
+        
+#    if message.author.id == res['Мой_id']:
+#        await message.channel.send("Тест")
+        
+    if message.author.id == res['Саня']:
+        emoji = '🐔'
+        await message.add_reaction(emoji)
+
+    
 
 
 def write_message():
@@ -63,4 +97,4 @@ def write_message():
     
     
 
-client.run(DISCORD_BOT_TOKEN)
+client.run(Token)
