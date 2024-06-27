@@ -3,8 +3,6 @@ import asyncio
 from discord.ext.commands import Bot
 from threading import Thread
 
-
-
 with open('Bot token.txt', 'r', encoding='utf-8') as f:
     Boken = f.read()
 
