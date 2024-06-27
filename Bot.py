@@ -11,26 +11,30 @@ with open('AmogusRapKruto.txt', 'r', encoding='utf-8') as f:
 # открываем файл, обязательно указывая режим и кодировку
 with open(r'IdArray.txt', mode='r', encoding='utf-8') as fl:
     # считываем содержимое файлам одним списком стром
-    onstring = fl.readlines()
+    person_ids = fl.readlines()
 
-# определяем выводной словарь. Ключевое слово dict занято классом словаря,
-# поэтому его использовать в качестве идентификатора переменной не рекомендуется.
-# Так же не рекомендуется напрямую инициализировать его экземпляры. Для этого
-# есть соответствующий синтаксический литерал
-res = {}
+person_ids_dict = {}  
+channels_ids_dict = {}
 
-# проходим в цикле по списку строк
-for i in onstring:
-    # присваиваем переменным k и v левую и правую часть подстроки,
-    # разделяя по символу ':'
+
+
+
+for i in person_ids:
     k, v = i.split(':')
-    # убираем лишние концевые пробелы
     v = v.strip()
-    # определяем, является ли значение переменной v числом, и если да, то 
-    # преобразуем к целому числу, иначе оставляем строкой
     v = int(v) if v.isdigit() else v
-    # добавляем в словарь соответствующие пары ключ:значение
-    res[k] =  v
+    person_ids_dict[k] =  v
+    
+with open(r'ChannelId.txt', mode='r', encoding='utf-8') as fr:
+    # считываем содержимое файлам одним списком стром
+    channels_ids = fr.readlines()
+
+
+for i in channels_ids:
+    k, v = i.split(':')
+    v = v.strip()
+    v = int(v) if v.isdigit() else v
+    channels_ids_dict[k] =  v
 
 
 intents = discord.Intents.default()
@@ -47,25 +51,25 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    if message.author.id == res['Лёха']:
+    if message.author.id == person_ids_dict['Лёха']:
         emoji = '🤡'
         await message.add_reaction(emoji)
         
-    if message.author.id == res['Сырник']:
+    if message.author.id == person_ids_dict['Сырник']:
         emoji = '💤'
         await message.add_reaction(emoji)
         
-    if message.author.id == res['Егор']:
+    if message.author.id == person_ids_dict['Егор']:
         emoji = '🚼'
         await message.add_reaction(emoji)
         
-    if message.author.id == res['Рома']:
+    if message.author.id == person_ids_dict['Рома']:
         await message.channel.send("О привет Рома")
         
-#    if message.author.id == res['Мой_id']:
+#    if message.author.id == person_ids_dict['Мой_id']:
 #        await message.channel.send("Тест")
         
-    if message.author.id == res['Саня']:
+    if message.author.id == person_ids_dict['Саня']:
         emoji = '🐔'
         await message.add_reaction(emoji)
 
@@ -74,7 +78,7 @@ async def on_message(message):
 
 def write_message():
     while True:
-        target_channel = client.get_channel(int(1067805711049949275))
+        target_channel = client.get_channel(int(channels_ids_dict['Общее']))
         
         print("Id чела для упоминания")
         user_id = str(input())
