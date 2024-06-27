@@ -1,40 +1,20 @@
 import discord
 import asyncio
+
+import ArrayId
+
 from discord.ext.commands import Bot
 from threading import Thread
 
 
 
-with open('AmogusRapKruto.txt', 'r', encoding='utf-8') as f:
-    Boken = f.read()
-
-# открываем файл, обязательно указывая режим и кодировку
-with open(r'IdArray.txt', mode='r', encoding='utf-8') as fl:
-    # считываем содержимое файлам одним списком стром
-    person_ids = fl.readlines()
-
-person_ids_dict = {}  
-channels_ids_dict = {}
+with open('DiscordToken.txt', 'r', encoding='utf-8') as f:
+    DISCORD_BOT_TOKEN = f.read()
 
 
 
-
-for i in person_ids:
-    k, v = i.split(':')
-    v = v.strip()
-    v = int(v) if v.isdigit() else v
-    person_ids_dict[k] =  v
-    
-with open(r'ChannelId.txt', mode='r', encoding='utf-8') as fr:
-    # считываем содержимое файлам одним списком стром
-    channels_ids = fr.readlines()
-
-
-for i in channels_ids:
-    k, v = i.split(':')
-    v = v.strip()
-    v = int(v) if v.isdigit() else v
-    channels_ids_dict[k] =  v
+person_ids_dict = ArrayId.person()
+channels_ids_dict = ArrayId.channel()
 
 
 intents = discord.Intents.default()
@@ -66,8 +46,8 @@ async def on_message(message):
     if message.author.id == person_ids_dict['Рома']:
         await message.channel.send("О привет Рома")
         
-#    if message.author.id == person_ids_dict['Мой_id']:
-#        await message.channel.send("Тест")
+  # if message.author.id == person_ids_dict['Мой_id']:
+  #     await message.channel.send("Тест")
         
     if message.author.id == person_ids_dict['Саня']:
         emoji = '🐔'
@@ -93,12 +73,6 @@ def write_message():
             asyncio.run_coroutine_threadsafe(target_channel.send(f"<@{user_id}> {message}"), client.loop)
             
         
-        
-        
-    
-    
-    
-    
-    
 
-client.run(Boken)
+
+client.run(DISCORD_BOT_TOKEN)
