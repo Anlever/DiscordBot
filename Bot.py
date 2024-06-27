@@ -3,7 +3,11 @@ import asyncio
 from discord.ext.commands import Bot
 from threading import Thread
 
-DISCORD_BOT_TOKEN = "MTI1MjIyNDk1NTU0Njk5Njg1MQ.Gz7yq9.IuJeCubSMYTumB2RiX_Bo-WHYgHZ8m73NbL8Ro"
+
+
+with open('Bot token.txt', 'r', encoding='utf-8') as f:
+    DISCORD_BOT_TOKEN = f.read()
+
 
 intents = discord.Intents.default()
 intents.message_content = True
