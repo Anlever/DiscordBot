@@ -28,7 +28,10 @@ async def on_ready():
 
 @bot.tree.command(name="амогус", description="Скидывает амогуса")
 async def amogus_command(interaction: discord.Interaction):
-    await interaction.response.send_message(file=discord.File('amogus.gif'))
+    await interaction.response.send_message(file=discord.File('pictures/amogus.gif'))
+@bot.tree.command(name="тык", description="Тыкает в экран")
+async def tik_command(interaction: discord.Interaction):
+    await interaction.response.send_message(file=discord.File('pictures/animetik.gif'))
 
 @bot.event
 async def on_message(message):
